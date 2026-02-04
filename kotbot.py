@@ -1,22 +1,24 @@
 from telegram import Update
 from telegram.ext import Application, MessageHandler, CommandHandler, filters, ContextTypes
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 
 # Загружаем переменные из файла .env
-load_dotenv(dotenv_path=r"C:/Users/user/source/repos/bot2/.env")
-# Получаем токен из переменной окружения
+load_dotenv()
+
 TOKEN = os.getenv("BOT_TOKEN")
 
 if not TOKEN:
     exit("Ошибка: BOT_TOKEN не найден в переменных окружения!")
 
-# Пути к файлам
-PHOTO_PATH = r"C:/Users/user/source/repos/bot2/istockphoto-1385217969-612x612.jpg"
-VOICE_PATH = r"C:/Users/user/source/repos/bot2/audio_2026-01-25_21-59-56.ogg"
+# Получаем текущую папку, где лежит скрипт
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Директория для сохранения загруженных файлов
-DOWNLOAD_DIR = r"C:/Users/user/source/repos/bot2/downloads"
+# Универсальные пути
+PHOTO_PATH = os.path.join(BASE_DIR, "istockphoto-1385217969-612x612.jpg")
+VOICE_PATH = os.path.join(BASE_DIR, "audio_2026-01-25_21-59-56.ogg")
+DOWNLOAD_DIR = os.path.join(BASE_DIR, "downloads")
+
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
